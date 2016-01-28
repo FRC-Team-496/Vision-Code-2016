@@ -4,8 +4,10 @@ package org.usfirst.frc.team496.robot;
 
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,14 +30,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends SampleRobot {
     RobotDrive myRobot;
     Joystick stick;
+    Jaguar jagLeftShoot;
+    Jaguar jagRightShoot;
+    Victor victorFeed;
     final String defaultAuto = "Default";
     final String customAuto = "My Auto";
     SendableChooser chooser;
+    static final int SHOOT_BTN = 0;
+    static final int FEED_BTN = 1;
 
     public Robot() {
         myRobot = new RobotDrive(0, 1);
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
+        jagLeftShoot = new Jaguar(1);
+        jagRightShoot = new Jaguar(3);
+        victorFeed = new Victor(4);
+        		
     }
     
     public void robotInit() {
@@ -83,7 +94,17 @@ public class Robot extends SampleRobot {
     public void operatorControl() {
         myRobot.setSafetyEnabled(true);
         while (isOperatorControl() && isEnabled()) {
-            myRobot.arcadeDrive(stick); // drive with arcade style (use right stick)
+            if(stick.getRawButton(SHOOT_BTN)){
+            	jagLeftShoot.set(1);
+            	jagRightShoot.set(1);
+            }
+            if(stick.getRawButton(FEED_BTN)){
+            	victorFeed.set(1);
+            }
+            jagLeftShoot.set(0);
+            jagRightShoot.set(0);
+            victorFeed.set(0);
+        	//myRobot.arcadeDrive(stick); // drive with arcade style (use right stick)
             Timer.delay(0.005);		// wait for a motor update time
         }
     }
