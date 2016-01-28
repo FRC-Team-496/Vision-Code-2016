@@ -36,16 +36,16 @@ public class Robot extends SampleRobot {
     final String defaultAuto = "Default";
     final String customAuto = "My Auto";
     SendableChooser chooser;
-    static final int SHOOT_BTN = 0;
-    static final int FEED_BTN = 1;
+    static final int SHOOT_BTN = 1;
+    static final int FEED_BTN = 2;
 
     public Robot() {
-        myRobot = new RobotDrive(0, 1);
+        myRobot = new RobotDrive(0,1);
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
-        jagLeftShoot = new Jaguar(1);
-        jagRightShoot = new Jaguar(3);
-        victorFeed = new Victor(4);
+        jagLeftShoot = new Jaguar(2);
+        jagRightShoot = new Jaguar(4);
+        victorFeed = new Victor(3);
         		
     }
     
@@ -98,12 +98,18 @@ public class Robot extends SampleRobot {
             	jagLeftShoot.set(1);
             	jagRightShoot.set(1);
             }
+            else{
+            	jagLeftShoot.set(0);
+                jagRightShoot.set(0);
+            }
             if(stick.getRawButton(FEED_BTN)){
             	victorFeed.set(1);
             }
-            jagLeftShoot.set(0);
-            jagRightShoot.set(0);
-            victorFeed.set(0);
+            else{
+            	victorFeed.set(0);
+            }
+            
+            
         	//myRobot.arcadeDrive(stick); // drive with arcade style (use right stick)
             Timer.delay(0.005);		// wait for a motor update time
         }
