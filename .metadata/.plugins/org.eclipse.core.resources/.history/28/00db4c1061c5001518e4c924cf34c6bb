@@ -43,8 +43,8 @@ public class Robot extends SampleRobot {
         myRobot = new RobotDrive(0,1);
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
-        jagLeftShoot = new Jaguar(4);
-        jagRightShoot = new Jaguar(2);
+        jagLeftShoot = new Jaguar(2);
+        jagRightShoot = new Jaguar(4);
         victorFeed = new Victor(3);
         		
     }
@@ -96,14 +96,14 @@ public class Robot extends SampleRobot {
         while (isOperatorControl() && isEnabled()) {
             if(stick.getRawButton(SHOOT_BTN)){
             	jagLeftShoot.set(1);
-            	jagRightShoot.set(-1);
+            	jagRightShoot.set(1);
             }
             else{
             	jagLeftShoot.set(0);
                 jagRightShoot.set(0);
             }
             if(stick.getRawButton(FEED_BTN)){
-            	victorFeed.set(-1);
+            	victorFeed.set(1);
             }
             else{
             	victorFeed.set(0);
