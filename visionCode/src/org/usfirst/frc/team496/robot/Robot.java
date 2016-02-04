@@ -52,7 +52,7 @@ public class Robot extends SampleRobot {
         victorFeed = new Victor(3);
         		
     }
-    
+    @override
     public void robotInit() {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
@@ -128,6 +128,7 @@ public class Robot extends SampleRobot {
     /**
      * Runs during test mode
      */
+    @override
     public void test() {
     	for (double area : grip.getNumberArray("targets/area", new double[0])){
     		System.out.println(area);
