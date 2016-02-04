@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team496.robot;
 
-
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Jaguar;
@@ -10,6 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.io.IOException;
 
 /**
  * This is a demo program showing the use of the RobotDrive class.
@@ -38,6 +38,10 @@ public class Robot extends SampleRobot {
     SendableChooser chooser;
     static final int SHOOT_BTN = 1;
     static final int FEED_BTN = 2;
+    private final static String GRIP_CMD =
+            "/usr/local/frc/JRE/bin/java -jar /home/lvuser/grip.jar /home/lvuser/project.grip";
+
+
 
     public Robot() {
         myRobot = new RobotDrive(0,1);
@@ -54,6 +58,12 @@ public class Robot extends SampleRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto modes", chooser);
+        try{
+        	new ProcessBuilder(GRIP_CMD).inheritIO().start();
+        }
+        catch(IOException e){
+        	e.printStackTrace();
+        }
     }
 
 	/**
@@ -119,5 +129,8 @@ public class Robot extends SampleRobot {
      * Runs during test mode
      */
     public void test() {
+    	for (double area : grip.getNumberArray("targets/area", new double[0])){
+    		System.out.println(area);
+    	}
     }
 }
